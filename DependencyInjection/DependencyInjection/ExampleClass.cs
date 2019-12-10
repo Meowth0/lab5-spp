@@ -11,11 +11,26 @@ namespace DependencyInjection
     {
         int GetNum();
     }
-    public class MySQLRepository : IRepository
+    public class MyRepository : IRepository
     {
         public int GetNum()
         {
             return 111;
+        }
+    }
+
+    public class ServiceImpl<TRepository> where TRepository : IRepository
+    {
+        TRepository rep;
+
+        public ServiceImpl(TRepository repository)
+        {
+            rep = repository;
+        }
+
+        public int GetNum()
+        {
+            return rep.GetNum();
         }
     }
 }

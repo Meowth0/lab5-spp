@@ -20,5 +20,18 @@ namespace DependencyInjection
             syncRoot = new object();
             instance = null;
         }
+
+        public object GetInstance(DependencyProvider provider)
+        {
+            if (instance == null)
+            {
+                lock (syncRoot)
+                {
+                    if (instance == null)
+                        instance = provider.Create(implementationType);
+                }
+            }
+            return instance;
+        }
     }
 }
